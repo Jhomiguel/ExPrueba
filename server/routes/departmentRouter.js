@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const departmentController = require("../controllers/departmentController");
-
 const router = Router();
 
 const { addDepartment, getDepartment, getAllDepartments, editDepartment, removeDepartment } = departmentController
