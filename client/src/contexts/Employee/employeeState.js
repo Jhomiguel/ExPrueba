@@ -4,7 +4,10 @@ import employeeContext from "./employeeContext";
 import employeeReducer from "./employeeReducer";
 
 const EmployeeState = (props) => {
-  const initialState = {};
+  const initialState = {
+    employees: [],
+    currentEmployee: {},
+  };
 
   const [state, dispatch] = useReducer(employeeReducer, initialState);
 

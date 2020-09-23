@@ -2,17 +2,20 @@ const { Router } = require("express");
 const departmentController = require("../controllers/departmentController");
 const router = Router();
 
-const { addDepartment, getDepartment, getAllDepartments, editDepartment, removeDepartment } = departmentController
+const {
+  addDepartment,
+  getDepartment,
+  getAllDepartments,
+  editDepartment,
+  removeDepartment,
+} = departmentController;
+
+router.route("/").get(getAllDepartments).post(addDepartment);
 
 router
-    .route('/')
-    .get(getAllDepartments)
-    .post(addDepartment)
+  .route("/:id")
+  .get(getDepartment)
+  .put(editDepartment)
+  .delete(removeDepartment);
 
-router
-    .route('/:id')
-    .get(getDepartment)
-    .put(editDepartment)
-    .delete(removeDepartment)
-
-module.exports = router
+module.exports = router;

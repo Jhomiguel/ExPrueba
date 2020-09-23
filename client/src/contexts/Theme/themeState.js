@@ -1,5 +1,4 @@
 import React, { useReducer } from "react";
-import axiosClient from "../../config/axios";
 import themeContext from "./themeContext";
 import themeReducer from "./themeReducer";
 
