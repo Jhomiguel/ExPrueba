@@ -1,64 +1,63 @@
-import React from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import React, { useContext, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
+import DepartmentContext from "../../contexts/Department/departmentContext";
+import Department from "./Department";
+import { Toolbar, Typography } from "@material-ui/core";
 
-const StyledTableRow = withStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: theme.palette.common.black,
     "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
     },
   },
-}))(TableRow);
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+  head: {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.common.white,
+  },
+}));
 
 function Departments() {
+  const classes = useStyles();
+  const departmentContext = useContext(DepartmentContext);
+  const { departments, getDepartments } = departmentContext;
+
+  useEffect(() => {
+    getDepartments();
+  }, []);
+
+  if (!departments) return <p>Loading</p>;
   return (
     <>
-      <TableContainer component={Paper}>
+      <Typography variant="h3" align="center">
+        Department Management
+      </Typography>
+      <Toolbar />
+      <TableContainer>
         <Table>
           <TableHead>
-            <TableRow>
-              <StyledTableCell align="center">Name</StyledTableCell>
-              <StyledTableCell align="center">Description</StyledTableCell>
-              <StyledTableCell align="center">Actions</StyledTableCell>
+            <TableRow className={classes.root}>
+              <TableCell className={classes.head} align="center">
+                Name
+              </TableCell>
+              <TableCell className={classes.head} align="center">
+                Description
+              </TableCell>
+              <TableCell className={classes.head} align="center">
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell component="th" align="center" scope="row">
-                  {row.name}
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.calories}</StyledTableCell>
-                <StyledTableCell align="center">{row.fat}</StyledTableCell>
-              </StyledTableRow>
+            {departments.map((department) => (
+              <Department key={department._id} departmentDetails={department} />
             ))}
           </TableBody>
         </Table>

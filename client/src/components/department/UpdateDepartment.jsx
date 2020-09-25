@@ -1,20 +1,34 @@
+import React, { useState, useContext, useEffect } from "react";
 import { Button } from "@material-ui/core";
-import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import DepartmentContext from "../../contexts/Department/departmentContext";
 
-const CreateDepartment = () => {
-  const [name, saveName] = useState("");
-  const [description, saveDescription] = useState("");
+const UpdateDepartment = () => {
+  const [department, saveDepartment] = useState({});
   const [alert, setAlert] = useState({});
 
   const history = useHistory();
   const departmentContext = useContext(DepartmentContext);
-  const { createDepartment } = departmentContext;
+  const { updateDepartment, currentDepartment } = departmentContext;
+
+  const { name, description } = department;
+
+  useEffect(() => {
+    saveDepartment(currentDepartment);
+  }, [currentDepartment]);
+
+  if (!currentDepartment) return <p>Loading</p>;
+
+  const handleChange = (e) => {
+    saveDepartment({
+      ...department,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name.trim() === "" || description.trim() === "") {
+    if (name.trim() == "" || description.trim() == "") {
       setAlert({
         msg: "All the fields are required",
         classes: "alert alert-danger text-center text-uppercase p3",
@@ -24,7 +38,7 @@ const CreateDepartment = () => {
       }, 2000);
       return;
     }
-    createDepartment({ name, description });
+    updateDepartment(department);
     history.push("/");
   };
   return (
@@ -32,7 +46,7 @@ const CreateDepartment = () => {
       <div className="col-md-8">
         <div className="card">
           <div className="card-body">
-            <h2 className="text-center mb-4 ">Create Department</h2>
+            <h2 className="text-center mb-4 ">Update Department</h2>
             {alert ? <p className={alert.classes}>{alert.msg}</p> : null}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -40,32 +54,31 @@ const CreateDepartment = () => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Department Name"
+                  placeholder="Department New Name"
                   name="name"
                   value={name}
-                  onChange={(e) => saveName(e.target.value)}
+                  onChange={handleChange}
                 />
               </div>
 
               <div className="form-group">
                 <label>Description</label>
                 <input
-                  type="richtext"
+                  type="text"
                   className="form-control"
-                  placeholder="Department Description"
+                  placeholder="Department New Description"
                   name="description"
                   value={description}
-                  onChange={(e) => saveDescription(e.target.value)}
+                  onChange={handleChange}
                 />
               </div>
-
               <Button
                 variant="contained"
                 color="primary"
                 type="submit"
                 fullWidth
               >
-                Create
+                Update
               </Button>
             </form>
           </div>
@@ -75,4 +88,4 @@ const CreateDepartment = () => {
   );
 };
 
-export default CreateDepartment;
+export default UpdateDepartment;

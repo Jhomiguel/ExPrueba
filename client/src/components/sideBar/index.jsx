@@ -1,111 +1,125 @@
-import React, { useState } from "react";
-import useStyles from "./Styles";
-import clsx from "clsx";
-import { useTheme } from "@material-ui/core/styles";
+import React, { useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-
+import ColorLensIcon from "@material-ui/icons/ColorLens";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import ViewComfyIcon from "@material-ui/icons/ViewComfy";
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import { Link } from "react-router-dom";
+import ThemeContext from "../../contexts/Theme/themeContext";
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    position: "absolute",
+    height: 50,
+    ...theme.mixins.toolbar,
+  },
+
+  drawer: {
+    width: drawerWidth,
+  },
+  Logo: {
+    marginRight: theme.spacing(10),
+  },
+  drawerContainer: {
+    overflow: "auto",
+  },
+  bcColorText: {
+    backgroundColor: theme.palette.primary,
+  },
+}));
 
 export default function SideBar() {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const themeContext = useContext(ThemeContext);
+  const { redTheme, blueTheme, greenTheme } = themeContext;
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
+    <>
+      <AppBar className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open sidebar"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Link to={"/"} style={{ textDecoration: "inherit" }}>
+            <Typography variant="h6" color={"inherit"}>
+              Panel Management
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <>
-                <Typography>Menu</Typography>
-                <ChevronLeftIcon />
-              </>
-            )}
-          </IconButton>
-        </div>
+      <Toolbar />
+      <Drawer className={classes.drawer} variant="permanent">
+        <Toolbar />
+        <List>
+          <Link to={"/department/create"} style={{ textDecoration: "inherit" }}>
+            <ListItem button>
+              <ListItemIcon>
+                <AddBoxIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Add Department"} />
+            </ListItem>
+          </Link>
+          <Link to={"/"} style={{ textDecoration: "inherit" }}>
+            <ListItem button>
+              <ListItemIcon>
+                <ViewComfyIcon />
+              </ListItemIcon>
+              <ListItemText primary={"View Departments"} />
+            </ListItem>
+          </Link>
+        </List>
+        <Divider />
+        <List>
+          <Link to={"/employee/add"} style={{ textDecoration: "inherit" }}>
+            <ListItem button>
+              <ListItemIcon>
+                <PersonAddIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Add Employee"} />
+            </ListItem>
+          </Link>
+          <Link to={"/employee"} style={{ textDecoration: "inherit" }}>
+            <ListItem button>
+              <ListItemIcon>
+                <ViewComfyIcon />
+              </ListItemIcon>
+              <ListItemText primary={"View Employees"} />
+            </ListItem>
+          </Link>
+        </List>
+        <Divider />
 
-        <Divider />
-        <List>
-          {["Add Department", "View Departments"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <AddBoxIcon /> : <ViewComfyIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {["Add Employee", "View Employees"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <PersonAddIcon /> : <ViewComfyIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        <ListItem button onClick={() => redTheme()}>
+          <ListItemIcon>
+            <ColorLensIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Red"} />
+        </ListItem>
+
+        <ListItem button onClick={() => blueTheme()}>
+          <ListItemIcon>
+            <ColorLensIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Blue"} />
+        </ListItem>
+
+        <ListItem button onClick={() => greenTheme()}>
+          <ListItemIcon>
+            <ColorLensIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Green"} />
+        </ListItem>
       </Drawer>
-    </div>
+    </>
   );
 }

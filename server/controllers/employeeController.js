@@ -8,6 +8,7 @@ const addEmployee = async (req, res) => {
       ...req.body,
       department: req.department._id,
     });
+
     res.status(201).json({ data: employee });
   } catch (e) {
     console.error(e);
@@ -18,7 +19,11 @@ const addEmployee = async (req, res) => {
 //Get all the employee
 const getEmployee = async (req, res) => {
   try {
-    const employee = await employeeModel.findById(req.params.id).lean().exec();
+    const employee = await employeeModel
+      .findById(req.params.id)
+      .populate("department")
+      .lean()
+      .exec();
 
     if (!employee) {
       return res.status(404).end();
@@ -33,7 +38,11 @@ const getEmployee = async (req, res) => {
 //Get an employee by ID
 const getAllEmployees = async (req, res) => {
   try {
-    const employees = await employeeModel.find().lean().exec();
+    const employees = await employeeModel
+      .find()
+      .populate("department")
+      .lean()
+      .exec();
 
     if (!employees) {
       return res.status(404).end();
@@ -71,7 +80,7 @@ const editEmployee = async (req, res) => {
     const department = await departmentModel.findOne({ name: departmentName });
 
     if (!department)
-      return res.status(404).send({ error: "Department not Found" });
+      return res.status(404).json({ error: "Department not Found" });
 
     const updatedEmployee = await employeeModel
       .findOneAndUpdate(
@@ -81,6 +90,7 @@ const editEmployee = async (req, res) => {
         { ...req.body, department: department._id },
         { new: true }
       )
+      .populate("department")
       .lean()
       .exec();
 

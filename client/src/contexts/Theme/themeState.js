@@ -1,14 +1,47 @@
 import React, { useReducer } from "react";
-import themeContext from "./themeContext";
 import themeReducer from "./themeReducer";
+import themeContext from "./themeContext";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { BLUE_THEME, GREEN_THEME, RED_THEME } from "../../types";
 
 const ThemeState = (props) => {
-  const initialState = {};
+  const initialState = {
+    theme: {
+      palette: {
+        primary: {
+          main: "#3f50b5",
+        },
+      },
+    },
+  };
 
   const [state, dispatch] = useReducer(themeReducer, initialState);
+  const theme = createMuiTheme(
+    state.currentTheme ? state.currentTheme : state.theme
+  );
+
+  const redTheme = () => {
+    dispatch({
+      type: RED_THEME,
+    });
+  };
+
+  const blueTheme = () => {
+    dispatch({
+      type: BLUE_THEME,
+    });
+  };
+
+  const greenTheme = () => {
+    dispatch({
+      type: GREEN_THEME,
+    });
+  };
 
   return (
-    <themeContext.Provider value={{}}>{props.children}</themeContext.Provider>
+    <themeContext.Provider value={{ greenTheme, blueTheme, redTheme }}>
+      <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+    </themeContext.Provider>
   );
 };
 

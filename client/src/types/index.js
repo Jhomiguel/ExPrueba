@@ -2,12 +2,17 @@
 export const CREATE_DEPARTMENT = "CREATE_DEPARTMENT";
 export const EDIT_DEPARTMENT = "EDIT_DEPARTMENT";
 export const DELETE_DEPARTMENT = "DELETE_DEPARTMENT";
+export const GET_DEPARTMENT = "GET_DEPARTMENT";
 export const GET_DEPARTMENTS = "GET_DEPARTMENTS";
 
 //Employee
 export const CREATE_EMPLOYEE = "CREATE_EMPLOYEE";
 export const EDIT_EMPLOYEE = "EDIT_EMPLOYEE";
 export const DELETE_EMPLOYEE = "DELETE_EMPLOYEE";
+export const GET_EMPLOYEE = "GET_EMPLOYEE";
 export const GET_EMPLOYEES = "GET_EMPLOYEES";
 
 //Theme
+export const RED_THEME = "RED_THEME";
+export const GREEN_THEME = "GREEN_THEME";
+export const BLUE_THEME = "BLUE_THEME";

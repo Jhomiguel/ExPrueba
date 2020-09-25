@@ -20,7 +20,7 @@ const getDepartment = async (req, res) => {
       .lean()
       .exec();
 
-    if (department.keys.length === 0) {
+    if (!department) {
       return res.status(404).end();
     }
     res.status(200).json({ data: department });

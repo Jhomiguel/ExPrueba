@@ -10,7 +10,7 @@ const employeeSchema = mongoose.Schema({
     require: true,
   },
   salary: {
-    type: mongoose.Schema.Types.Decimal128,
+    type: Number,
     require: true,
   },
   department: {

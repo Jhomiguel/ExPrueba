@@ -1,70 +1,72 @@
-import React from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import React, { useContext, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import { Toolbar, Typography } from "@material-ui/core";
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
+import EmployeeContext from "../../contexts/Employee/employeeContext";
 
-const StyledTableRow = withStyles((theme) => ({
+import Employee from "./Employee";
+
+const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: theme.palette.common.black,
     "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
     },
   },
-}))(TableRow);
-
-function createData(name, calories, fat, carbs, protein, action) {
-  return { name, calories, fat, carbs, protein, action };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0, "action"),
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0, "action"),
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0, "action"),
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0, "action"),
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0, "action"),
-];
+  head: {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.common.white,
+  },
+}));
 
 function Employees() {
+  const classes = useStyles();
+  const employeeContext = useContext(EmployeeContext);
+  const { employees, getEmployees } = employeeContext;
+
+  useEffect(() => {
+    getEmployees();
+  }, [employees]);
+
   return (
     <>
-      <TableContainer component={Paper}>
+      <Typography variant="h3" align="center">
+        Employees Management
+      </Typography>
+      <Toolbar />
+      <TableContainer>
         <Table>
           <TableHead>
-            <TableRow>
-              <StyledTableCell align="center">FirstName</StyledTableCell>
-              <StyledTableCell align="center">LastName</StyledTableCell>
-              <StyledTableCell align="center">Salary</StyledTableCell>
-              <StyledTableCell align="center">Department</StyledTableCell>
-              <StyledTableCell align="center">JoinDate</StyledTableCell>
-              <StyledTableCell align="center">Actions</StyledTableCell>
+            <TableRow className={classes.root}>
+              <TableCell className={classes.head} align="center">
+                First Name
+              </TableCell>
+              <TableCell className={classes.head} align="center">
+                Last Name
+              </TableCell>
+              <TableCell className={classes.head} align="center">
+                Salary
+              </TableCell>
+              <TableCell className={classes.head} align="center">
+                Department
+              </TableCell>
+              <TableCell className={classes.head} align="center">
+                Join Date
+              </TableCell>
+              <TableCell className={classes.head} align="center">
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell component="th" scope="row">
-                  {row.name}
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.calories}</StyledTableCell>
-                <StyledTableCell align="center">{row.fat}</StyledTableCell>
-                <StyledTableCell align="center">{row.protein}</StyledTableCell>
-                <StyledTableCell align="center">{row.carbs}</StyledTableCell>
-                <StyledTableCell align="center">{row.action}</StyledTableCell>
-              </StyledTableRow>
+            {employees.map((employee) => (
+              <Employee key={employee._id} employeeDetail={employee} />
             ))}
           </TableBody>
         </Table>
