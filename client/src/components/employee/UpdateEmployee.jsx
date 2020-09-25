@@ -25,10 +25,6 @@ const UpdateEmployee = () => {
   }, [currentEmployee]);
   if (!department) return <p>Loading</p>;
 
-  // useEffect(() => {
-  //   getDepartments();
-  // }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (firstName.trim() === "" || lastName.trim() === "" || salary <= 0) {

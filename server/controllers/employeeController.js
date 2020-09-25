@@ -76,6 +76,7 @@ const removeEmployee = async (req, res) => {
 //Edit an employee by ID
 const editEmployee = async (req, res) => {
   try {
+    //Verify if the department really exists
     const departmentName = req.body.department;
     const department = await departmentModel.findOne({ name: departmentName });
 

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config({ path: ".env.local" });
 
+//Return database response connection
 const DBConnection = async () => {
   try {
     await mongoose.connect(process.env.DB_MONGO, {

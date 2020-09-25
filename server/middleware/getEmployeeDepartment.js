@@ -1,5 +1,6 @@
 const departmentModel = require("../models/department");
 
+//Middleware which get the employee department
 const getEmployeeDepartment = async (req, res, next) => {
   const departmentName = req.body.department;
   const department = await departmentModel.findOne({ name: departmentName });
