@@ -14,4 +14,4 @@ This app consists of two principal modules for manage departments and employees.
 
 The first module consists of two views which are “View Departments” and “Add Department”. In the first one the users can see a table with all the departments that are created; this table has an action column with two buttons for edit and delete departments. Its good to know that users can not remove a department that has employees in there. If the user presses the Edit button, the app will redirect him to the Update Employee view, where the user can change the selected department information.
 
-The second module is similar that the first one, it has two views which are “View Employees” and “Add Employee”, in the first and second view users can do exactly the same as in departments, the only difference are the required fields.
+The second module is similar that the first one, it has two views which are “View Employees” and “Add Employee”, in the first and second view users can do exactly the same as in departments, the only differences are the required fields.

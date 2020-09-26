@@ -13,12 +13,11 @@ const ThemeState = (props) => {
         },
       },
     },
+    currentTheme: JSON.parse(localStorage.getItem("theme")),
   };
 
   const [state, dispatch] = useReducer(themeReducer, initialState);
-  const theme = createMuiTheme(
-    state.currentTheme ? state.currentTheme : state.theme
-  );
+  const theme = createMuiTheme(state.currentTheme);
 
   const redTheme = () => {
     dispatch({
