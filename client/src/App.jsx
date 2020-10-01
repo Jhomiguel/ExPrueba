@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+
   return (
     <>
       <div className={classes.root}>

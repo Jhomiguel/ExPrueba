@@ -4,6 +4,7 @@ export const EDIT_DEPARTMENT = "EDIT_DEPARTMENT";
 export const DELETE_DEPARTMENT = "DELETE_DEPARTMENT";
 export const GET_DEPARTMENT = "GET_DEPARTMENT";
 export const GET_DEPARTMENTS = "GET_DEPARTMENTS";
+export const SAUDAR = "SALUDAR";
 
 //Employee
 export const CREATE_EMPLOYEE = "CREATE_EMPLOYEE";

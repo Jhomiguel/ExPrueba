@@ -16,7 +16,7 @@ const addEmployee = async (req, res) => {
   }
 };
 
-//Get all the employee
+//Get an employee by ID
 const getEmployee = async (req, res) => {
   try {
     const employee = await employeeModel
@@ -35,7 +35,7 @@ const getEmployee = async (req, res) => {
   }
 };
 
-//Get an employee by ID
+//Get all the employee
 const getAllEmployees = async (req, res) => {
   try {
     const employees = await employeeModel

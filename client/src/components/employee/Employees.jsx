@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Employees() {
+function Employees({ info }) {
   const classes = useStyles();
   const employeeContext = useContext(EmployeeContext);
   const { employees, getEmployees } = employeeContext;
